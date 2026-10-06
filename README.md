@@ -1,6 +1,6 @@
 # Gemma 4 E4B · Colab 대화
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/9ab9ef20d66d72478f8fa8f542c57e07844ef605/gemma4_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/7d3fde0f04025182b54fa68e39afc8d737e70bed/gemma4_colab.ipynb)
 
 배지는 실행 코드가 저장된 커밋에 고정되어 있습니다. 노트북을 수정해 배포할 때 링크의 커밋도 갱신하면 이전 버전 캐시와 구분되는 새 주소로 열립니다. GPU 런타임과 다운로드 파일은 배지 클릭으로 초기화되지 않습니다.
 
