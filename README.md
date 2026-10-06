@@ -2,35 +2,37 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/5bd498b1ee7a06513667d41a7504cd9087811360/gemma4_colab.ipynb)
 
-배지는 실행 코드가 저장된 커밋에 고정되어 있습니다. 노트북을 수정해 배포할 때 링크의 커밋도 갱신하면 이전 버전 캐시와 구분되는 새 주소로 열립니다. GPU 런타임과 다운로드 파일은 배지 클릭으로 초기화되지 않습니다.
+배지는 실행 코드가 저장된 커밋에 고정되어 있습니다. 새 버전 배포 시 커밋 주소도 갱신해 이전 버전 캐시와 구분합니다. 배지 클릭으로 GPU 런타임이나 다운로드 파일이 삭제되지는 않습니다.
 
-Google 공식 Gemma 4 E4B QAT W4A16 모델과 Gradio로 한국어 대화를 해보는 Colab 노트북입니다.
+Google 공식 Gemma 4 E4B QAT Q4_0 GGUF와 Gradio로 한국어 대화를 해보는 Colab 노트북입니다. 공식 llama.cpp CUDA 사전 빌드 파일을 받아 실행합니다. Ubuntu 24.04용 배포 파일이므로 Colab의 최신 기본 런타임을 사용하세요.
 
 ## 실행
 
 1. 위 **Open in Colab** 배지를 누릅니다.
-2. **런타임 → 런타임 유형 변경 → T4 GPU**를 선택합니다.
-3. 셀을 위에서부터 실행합니다. 처음에는 vLLM 배포 파일 설치와 약 11.51GB 모델 가중치 다운로드가 필요합니다. 기존 빌드 셀을 중지하고 새 런타임에서 시작하세요.
-4. 대화창 셀에서 비밀번호를 입력합니다.
-5. 표시되는 Gradio 공유 링크를 열고 사용자 이름 `gemma`와 입력한 비밀번호로 로그인합니다.
-6. 사용을 마치면 종료 셀을 실행하고 Colab 런타임을 삭제합니다.
+2. 기존 vLLM 또는 llama.cpp 서버가 실행 중이면 **런타임 → 연결 해제 및 런타임 삭제** 후 새 런타임에서 시작합니다.
+3. **런타임 → 런타임 유형 변경 → T4 GPU**를 선택합니다.
+4. 셀을 위에서부터 실행합니다. 서버 파일 약 172MB, CUDA 라이브러리 약 594MB, GGUF 모델 약 5.15GB를 다운로드합니다.
+5. 대화창 셀에서 비밀번호를 입력합니다.
+6. Gradio 공유 링크를 열고 사용자 이름 `gemma`와 입력한 비밀번호로 로그인합니다.
+7. 사용을 마치면 종료 셀을 실행하고 Colab 런타임을 삭제합니다.
 
 ## 기본 구성
 
 | 항목 | 설정 |
 |---|---|
-| 모델 | Google Gemma 4 E4B QAT W4A16 compressed-tensors |
+| 모델 | Google Gemma 4 E4B QAT Q4_0 GGUF |
 | 입력 | 텍스트 |
-| 실행 엔진 | vLLM 0.26.0, CUDA 12.9, FP16 |
-| 모델 설정 라이브러리 | Transformers 5.5.3 |
+| 실행 엔진 | llama.cpp b11433, Ubuntu x64 CUDA 12.8 사전 빌드 |
+| 설치 | 바이너리와 CUDA 라이브러리 다운로드·압축 해제 |
 | 대화창 | Gradio 6.29.1 |
 | 문맥 / 답변 길이 | 4,096 / 최대 512토큰 |
 | 동시 생성 | 1개 |
+| Flash Attention | 꺼짐 |
 | 사고 모드 | 꺼짐 |
 
-첫 셀에서 실행 설정을 변경할 수 있습니다. 문맥 한도를 넘으면 대화를 지우고 새로 시작하세요. E4B의 E는 유효 파라미터를 뜻하므로 파일 크기를 4B만으로 계산할 수 없습니다.
+첫 셀에서 실행 설정을 변경할 수 있습니다. 문맥 한도를 넘으면 대화를 지우고 새로 시작하세요. 텍스트 대화용 GGUF 파일 하나를 사용하며 이미지용 mmproj는 다운로드하지 않습니다.
 
-설치와 vLLM 준비 로그는 실시간으로 표시하며, 출력이 없는 구간에는 15초마다 경과 시간을 표시합니다. 모델 다운로드는 진행 막대를, 모델 로딩은 GPU·메모리 할당 로그를 표시합니다.
+설치·다운로드·압축 해제·모델 로딩 로그를 표시합니다. 다운로드에는 진행률을 표시하고, 별도의 경과 시간 메시지는 출력하지 않습니다. 소스 컴파일과 vLLM·PyTorch·Transformers 설치 단계는 없습니다.
 
 ## Colab 이용 조건
 
@@ -40,22 +42,14 @@ Google 공식 Gemma 4 E4B QAT W4A16 모델과 Gradio로 한국어 대화를 해�
 
 ## 참고 자료
 
-- [Google 공식 양자화 모델](https://huggingface.co/google/gemma-4-E4B-it-qat-w4a16-ct)
-- [Gemma 4 메모리 요구량](https://ai.google.dev/gemma/docs/core)
-- [vLLM Gemma 4 실행 안내](https://github.com/vllm-project/recipes/blob/main/Google/Gemma4.md)
+- [Google 공식 GGUF 모델](https://huggingface.co/google/gemma-4-E4B-it-qat-q4_0-gguf)
+- [llama.cpp 사전 빌드 배포 파일](https://github.com/ggml-org/llama.cpp/releases/tag/b11433)
+- [llama.cpp 서버 사용법](https://github.com/ggml-org/llama.cpp/blob/b11433/tools/server/README.md)
 - [Gradio](https://www.gradio.app/)
 - [Colab 이용 조건](https://research.google.com/colaboratory/faq.html)
 
 ## 실행 확인 범위
 
-노트북 형식과 모든 코드 셀의 Python 구문을 확인했습니다. 대화 기록 전달과 답변 스트리밍은 모의 모델 응답으로 확인했고, Gradio 6.29.1을 로컬에서 실행해 비밀번호 로그인과 익명 접속 차단을 확인했습니다.
+노트북 형식과 코드 구문, 사전 빌드 배포 파일 구성, 로그 전달 및 서버 준비 상태 확인을 로컬에서 확인했습니다. 대화 기록 전달과 답변 스트리밍은 모의 모델 응답으로 확인했습니다.
 
-vLLM 서버는 별도 Python 3.12 환경에 설치합니다. T4에서 사용할 수 있도록 CUDA 12.9 배포 파일과 FP16을 선택했습니다. 첫 실행에서는 eager 모드로 그래프 준비를 생략합니다.
-
-Colab T4에서 vLLM 설치, 모델 로딩 및 실제 답변 생성까지 실행한 결과는 아직 확인하지 않았습니다.
-
-로그 출력은 로컬 하위 프로세스로 확인했습니다. 프로세스 종료 전에 표준 출력과 오류 출력이 표시되는지, 경과 시간 표시와 실패 전달이 작동하는지 확인했습니다.
-
-vLLM 실행 명령의 FP16·텍스트 전용·eager 설정을 확인했고, 모의 서버로 로딩 로그와 준비 상태 확인을 검증했습니다.
-
-Transformers 5.5.3에서 해당 체크포인트의 Gemma 4 설정을 읽고 head_dim 접근이 성공하는 것을 확인했습니다.
+공식 CUDA 12.8 배포 설정에 T4의 CUDA 아키텍처 7.5가 포함되어 있습니다. Colab T4에서 바이너리 실행, 모델 로딩 및 실제 답변 생성까지는 직접 검증하지 않았습니다.
