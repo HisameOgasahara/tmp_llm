@@ -51,3 +51,36 @@ Gemma 4 GGUF 모델을 llama.cpp로 실행하고, Gradio에서 텍스트·이미
 | 파일 읽기 | 현재 대화에 첨부한 파일을 한 번에 최대 6,000자 읽기 |
 
 모델이 필요에 따라 도구를 호출하며, 요청당 최대 3차례·6개 도구를 실행합니다.
+
+## HF Transformers · PyTorch 실험
+
+별도 노트북 [gemma4_hf_colab.ipynb](gemma4_hf_colab.ipynb)은 Google 공식 Gemma 4 12B QAT 가중치를 bitsandbytes NF4 4비트로 로딩합니다. 기존 GGUF 노트북과 독립적으로 실행합니다.
+
+| 항목 | HF 노트북 설정 |
+|---|---|
+| 원본 가중치 | `google/gemma-4-12B-it-qat-q4_0-unquantized` |
+| 다운로드 | 반정밀도 가중치 약 23.9GB, 로딩 중 NF4로 양자화 |
+| 실행 | Transformers 5.18.0 · bitsandbytes 0.50.2 · Accelerate 1.15.0 |
+| 계산 정밀도 | T4는 FP16, BF16 지원 GPU는 BF16 |
+| 내부 접근 | 같은 런타임의 `model`, `processor` |
+| 직접 대화 | HF 셀에서 텍스트·이미지·파일·도구 사용 |
+| 내부 관찰 | 마지막 위치 logits, hidden states, 선택적 attention·모듈 출력 hook |
+| Gradio | 독립된 UI 셀에서 이미지·파일 첨부, 도구 사용, 메시지 편집, 답변 스트리밍 |
+
+### 실행 순서
+
+1. `gemma4_hf_colab.ipynb`을 Colab에 업로드하고 GPU 런타임을 선택합니다.
+2. 설정, 패키지 설치, 모델 로딩, 대화·도구 함수 셀을 실행합니다.
+3. 직접 대화 셀이나 Gradio UI 셀을 실행합니다. 두 경로는 같은 모델을 사용합니다.
+4. 생성이 끝난 뒤 내부 관찰 셀을 실행합니다. 결과는 `inspection_outputs`와 `captured_module_output`에 CPU 텐서로 남습니다.
+5. 사용 종료 셀을 실행하고 Colab 런타임을 삭제합니다.
+
+### 메모리와 관찰 설정
+
+NF4는 기존 Balanced의 Q4_K_M 및 공식 GGUF의 Q4_0과 다른 양자화 방식입니다. 공식 가중치의 답변 성향도 Balanced와 다릅니다. 모델 다운로드 크기와 실제 GPU 사용량은 다르며, VRAM 8GB·RAM 10~12GB 이내 실행을 보장하지 않습니다. 로딩 및 실행 후 GPU 할당·예약·최대 할당 메모리와 Python 프로세스 최대 RAM을 표시합니다.
+
+기본 관찰 입력 한도는 256토큰입니다. `INSPECT_ATTENTIONS=True`이면 해당 forward 동안 eager attention을 사용합니다. `INSPECT_MODULE_NAME`은 `model.named_modules()`에서 확인한 이름으로 지정합니다. 최근 대화 입력과 응답은 `last_messages`, `last_inputs`, `last_raw_response`, `last_response`에서 확인합니다. `last_inputs`와 관찰 결과는 CPU에 보관합니다.
+
+Gradio 셀 실행 후에도 다른 HF 셀을 실행할 수 있습니다. 모델 실행은 한 번에 하나씩 처리합니다. `GRADIO_SHARE=True`이면 외부 접속 가능한 공유 링크를 엽니다. 사용 종료 시 UI와 모델·관찰 결과를 해제합니다.
+
+[공식 QAT 가중치](https://huggingface.co/google/gemma-4-12B-it-qat-q4_0-unquantized) · [HF bitsandbytes](https://huggingface.co/docs/transformers/en/quantization/bitsandbytes) · [HF 응답 파서](https://huggingface.co/docs/transformers/en/chat_response_parsing)
