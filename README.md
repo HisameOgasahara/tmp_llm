@@ -1,6 +1,6 @@
 # Gemma 4 · Colab 대화
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/c915734/gemma4_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/hf-gemma4-12b-4bit/gemma4_hf_colab.ipynb)
 
 Gemma 4 GGUF 모델을 llama.cpp로 실행하고, Gradio에서 텍스트·이미지 대화를 하는 Colab 노트북입니다. 계산, 현재 시각 조회, 웹 검색, 첨부 텍스트 파일 읽기를 지원합니다.
 
