@@ -1,6 +1,6 @@
 # Gemma 4 E4B · Colab 대화
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/5bd498b1ee7a06513667d41a7504cd9087811360/gemma4_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/447d378c20cbbf5c2b637b9853474d648b1d123d/gemma4_colab.ipynb)
 
 배지는 실행 코드가 저장된 커밋에 고정되어 있습니다. 새 버전 배포 시 커밋 주소도 갱신해 이전 버전 캐시와 구분합니다. 배지 클릭으로 GPU 런타임이나 다운로드 파일이 삭제되지는 않습니다.
 
