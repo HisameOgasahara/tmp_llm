@@ -1,6 +1,6 @@
 # Gemma 4 E4B · Colab 대화
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/630f0c75396e04dd945ef62e36107bcda73260c9/gemma4_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/9ab9ef20d66d72478f8fa8f542c57e07844ef605/gemma4_colab.ipynb)
 
 배지는 실행 코드가 저장된 커밋에 고정되어 있습니다. 노트북을 수정해 배포할 때 링크의 커밋도 갱신하면 이전 버전 캐시와 구분되는 새 주소로 열립니다. GPU 런타임과 다운로드 파일은 배지 클릭으로 초기화되지 않습니다.
 
@@ -29,6 +29,8 @@ Google 공식 Gemma 4 E4B QAT Q4_0 모델과 Gradio로 한국어 대화를 해�
 
 첫 셀에서 실행 설정을 변경할 수 있습니다. 문맥 한도를 넘으면 대화를 지우고 새로 시작하세요. E4B의 E는 유효 파라미터를 뜻하므로 파일 크기를 4B만으로 계산할 수 없습니다.
 
+설치와 CUDA 빌드 로그는 실시간으로 표시하며, 출력이 없는 구간에는 15초마다 경과 시간을 표시합니다. 모델 다운로드는 진행 막대를, 모델 로딩은 GPU·메모리 할당 로그를 표시합니다.
+
 ## Colab 이용 조건
 
 무료 Colab은 GPU 종류와 사용 시간을 보장하지 않습니다. 노트북 UI를 벗어나 웹 UI를 주로 사용하는 방식은 제한되며 세션이 종료될 수 있습니다. Gradio 공유 링크를 만드는 이 노트북에도 해당 조건이 적용됩니다.
@@ -48,3 +50,5 @@ Google 공식 Gemma 4 E4B QAT Q4_0 모델과 Gradio로 한국어 대화를 해�
 노트북 형식과 모든 코드 셀의 Python 구문을 확인했습니다. 대화 기록 전달과 답변 스트리밍은 모의 모델 응답으로 확인했고, Gradio 6.29.1을 로컬에서 실행해 비밀번호 로그인과 익명 접속 차단을 확인했습니다.
 
 Colab T4에서 CUDA 빌드, 모델 로딩 및 실제 답변 생성까지 실행한 결과는 아직 확인하지 않았습니다.
+
+로그 출력은 로컬 하위 프로세스로 확인했습니다. 프로세스 종료 전에 표준 출력과 오류 출력이 표시되는지, 경과 시간 표시와 실패 전달이 작동하는지 확인했습니다.
