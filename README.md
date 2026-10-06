@@ -1,6 +1,6 @@
 # Gemma 4 E4B · Colab 대화
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/2257619e4b541a4ee47f438bcd6f07c2c6cede79/gemma4_colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/5bd498b1ee7a06513667d41a7504cd9087811360/gemma4_colab.ipynb)
 
 배지는 실행 코드가 저장된 커밋에 고정되어 있습니다. 노트북을 수정해 배포할 때 링크의 커밋도 갱신하면 이전 버전 캐시와 구분되는 새 주소로 열립니다. GPU 런타임과 다운로드 파일은 배지 클릭으로 초기화되지 않습니다.
 
@@ -22,6 +22,7 @@ Google 공식 Gemma 4 E4B QAT W4A16 모델과 Gradio로 한국어 대화를 해�
 | 모델 | Google Gemma 4 E4B QAT W4A16 compressed-tensors |
 | 입력 | 텍스트 |
 | 실행 엔진 | vLLM 0.26.0, CUDA 12.9, FP16 |
+| 모델 설정 라이브러리 | Transformers 5.5.3 |
 | 대화창 | Gradio 6.29.1 |
 | 문맥 / 답변 길이 | 4,096 / 최대 512토큰 |
 | 동시 생성 | 1개 |
@@ -56,3 +57,5 @@ Colab T4에서 vLLM 설치, 모델 로딩 및 실제 답변 생성까지 실행�
 로그 출력은 로컬 하위 프로세스로 확인했습니다. 프로세스 종료 전에 표준 출력과 오류 출력이 표시되는지, 경과 시간 표시와 실패 전달이 작동하는지 확인했습니다.
 
 vLLM 실행 명령의 FP16·텍스트 전용·eager 설정을 확인했고, 모의 서버로 로딩 로그와 준비 상태 확인을 검증했습니다.
+
+Transformers 5.5.3에서 해당 체크포인트의 Gemma 4 설정을 읽고 head_dim 접근이 성공하는 것을 확인했습니다.
