@@ -2,6 +2,8 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/hf-gemma4-12b-4bit/gemma4_hf_colab.ipynb)
 
+**26B-A4B IQ4_XS · T4:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/HisameOgasahara/tmp_llm/blob/hf-gemma4-12b-4bit/gemma4_26b_iq4xs_colab.ipynb)
+
 Google 공식 Gemma 4 12B QAT 가중치를 HF Transformers와 bitsandbytes NF4 4비트로 실행하는 Colab 노트북입니다. 공식 MTP 보조 모델로 speculative decoding을 사용합니다. HF 셀에서 직접 텍스트·이미지 대화와 도구를 사용하고, PyTorch 내부 출력을 관찰할 수 있습니다. Gradio 대화창은 별도 셀에서 같은 모델과 생성 함수를 사용합니다.
 
 ## 실행
